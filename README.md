@@ -22,7 +22,8 @@ Example initializer file -
 	CleanParams.configure do |config|
 	  config.params = {
 	    # Customize your params here
-	    'key' => ['key', 'Key']
+	    'key' => [['key', 'Key'], 'default'],
+		'key2' => [['key2', 'Key2'], 'key2']
 	  }
 	end
 	
@@ -34,6 +35,7 @@ And goodies -
 
 	params = CleanParams.clean(params) # params - rails params hash
 	params.key # => key
+	params.key2 # => key2
 	params.token # => 323344
 	params.caller_id # => 123
 	
