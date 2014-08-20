@@ -1,6 +1,7 @@
 # CleanParams
 
-TODO: Write a gem description
+Clean Params is a Ruby gem for use with Rails to access the controller parameters cleanly.
+No more ugly hash accesses. No more case sensitive checking.
 
 ## Installation
 
@@ -8,17 +9,15 @@ Add this line to your application's Gemfile:
 
     gem 'clean_params'
 
-And then execute:
+Run the generator to create the initializer file. You can specify your parsing rules here.
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install clean_params
+    rails g clean_params:install
 
 ## Usage
 
-TODO: Write usage instructions here
+	params = CleanParams.clean(params) # params - rails params hash
+	params.key # => params[:key]
+	params.token # => params[:token]
 
 ## Contributing
 

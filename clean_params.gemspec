@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["yogesh.pendharkar@gmail.com"]
   spec.description   = %q{Easy and clean way to maintain your params.}
   spec.summary       = %q{Clean your params hash with clean_params}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/ypendharkar/clean_params"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
