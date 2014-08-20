@@ -38,14 +38,16 @@ module CleanParams
     
     # search params hash for values in rules
     def get_value_from_params(val, controllerParams)
-      if val.is_a? String
-        val = val.split(",")
+      paramVariations = val[0]
+      defaultValue = val[1]
+      if paramVariations.is_a? String
+        paramVariations = paramVariations.split(",")
       end
-      val.each do |param|
+      paramVariations.each do |param|
         answer = search_hash(controllerParams, param)
         return answer if answer
       end
-      nil # return nil if no match
+      defaultValue # return default if no match
     end
     
     # Utility method: search hash recursively
@@ -60,7 +62,7 @@ module CleanParams
     
     # return nil if no rule for this attribute
     def method_missing(method, *args, &block)
-      set_instances(method, method.to_s)
+      set_instances(method, [method.to_s])
     end
   end
 end

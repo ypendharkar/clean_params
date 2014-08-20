@@ -4,10 +4,11 @@ describe CleanParams do
   before(:each) do
     CleanParams.configure do |config|
       config.params = {
-        'key' => ['key', 'Key'],
-        'token' => ['token', "Token"],
-        'source' => ['source', 'Source'],
-        'name' => ['name', 'Name', 'customer_name']
+        'key' => [['key', 'Key']],
+        'token' => [['token', "Token"]],
+        'source' => [['source', 'Source']],
+        'name' => [['name', 'Name', 'customer_name']],
+        'ip_addr' => [['ip_addr'], '127.0.0.1']
       }
     end
   end
@@ -37,5 +38,9 @@ describe CleanParams do
   
   it "should return nil if not present for no rule" do
     expect(res.no_keys).to be_nil
+  end
+  
+  it "should return default if no match" do
+    expect(res.ip_addr).to be == '127.0.0.1'
   end
 end
