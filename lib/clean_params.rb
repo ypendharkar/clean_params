@@ -1,31 +1,42 @@
 require "clean_params/version"
-require 'active_support/core_ext/hash'
+#require 'active_support/core_ext/hash'
 
 module CleanParams
   class << self
     attr_accessor :configuration
   end
 
+  # Sets configuration object
   def self.configure
     self.configuration ||= Configuration.new
     yield(configuration)
   end
   
+  # main method call; returns the final object
   def self.clean(controllerParams)
-    configuration.extract_params(controllerParams.with_indifferent_access)
+    configuration.controller_params = controllerParams
+    configuration.extract_params
     return configuration
   end
 
   class Configuration
-    attr_accessor :params
+    attr_accessor :params, :controller_params
     
-    def extract_params(controllerParams)
+    # for each rule in configuration file, check the params hash and sets instance variables
+    def extract_params
       params.each do |key, val|
-        self.class.send(:attr_accessor, key)
-        instance_variable_set("@#{key}", get_value_from_params(val, controllerParams))
+        set_instances(key, val)
       end
     end
     
+    private
+    
+    def set_instances(key, val)
+      self.class.send(:attr_accessor, key)
+      instance_variable_set("@#{key}", get_value_from_params(val, controller_params))
+    end
+    
+    # search params hash for values in rules
     def get_value_from_params(val, controllerParams)
       if val.is_a? String
         val = val.split(",")
@@ -37,15 +48,19 @@ module CleanParams
       nil # return nil if no match
     end
     
+    # Utility method: search hash recursively
     def search_hash(h, search)
       return h[search] if h.fetch(search, nil)
-
       h.keys.each do |k|
         answer = search_hash(h[k], search) if h[k].is_a? Hash
         return answer if answer
       end
-
       nil
+    end
+    
+    # return nil if no rule for this attribute
+    def method_missing(method, *args, &block)
+      set_instances(method, method.to_s)
     end
   end
 end
