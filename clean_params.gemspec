@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = CleanParams::VERSION
   spec.authors       = ["Yogesh Pendharkar"]
   spec.email         = ["yogesh.pendharkar@gmail.com"]
-  spec.description   = %q{Easy and clean way to maintain your params.}
+  spec.description   = %q{A better way to operate on Rails params.}
   spec.summary       = %q{Clean your params hash with clean_params}
   spec.homepage      = "https://github.com/ypendharkar/clean_params"
   spec.license       = "MIT"

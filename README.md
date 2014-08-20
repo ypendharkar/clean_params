@@ -17,9 +17,25 @@ Run the generator to create the initializer file. You can specify your parsing r
 
 ## Usage
 
+Example initializer file -
+
+	CleanParams.configure do |config|
+	  config.params = {
+	    # Customize your params here
+	    'key' => ['key', 'Key']
+	  }
+	end
+	
+Example params hash -
+
+	params = {"utf8"=>"✓", "authenticity_token"=>"123", "Key" => "key", "token"=>"323344", "customer_detail"=>{"caller_id"=>"123", "customer_name"=>"XYZ"}}
+	
+And goodies -
+
 	params = CleanParams.clean(params) # params - rails params hash
-	params.key # => params[:key]
-	params.token # => params[:token]
+	params.key # => key
+	params.token # => 323344
+	params.caller_id # => 123
 	
 Or you can include it inside the filter in ApplicationController and use the object inside any controller.
 
