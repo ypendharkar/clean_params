@@ -8,7 +8,7 @@ module CleanParams
 
   # Sets configuration object
   def self.configure
-    self.configuration ||= Configuration.new
+    self.configuration = Configuration.new
     yield(configuration)
   end
   
