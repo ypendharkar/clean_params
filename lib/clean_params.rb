@@ -34,12 +34,6 @@ module CleanParams
       (self.instance_variables - self.params.keys.map {|a| "@#{a}".to_sym}.push("@params".to_sym)).each {|var| remove_instance_variable("#{var}".to_sym) }
     end
     
-    private
-    
-    #def reset_config
-      #(self.instance_variables - self.params.keys.map {|a| "@#{a}".to_sym}).each {|var| remove_instance_variable("@#{var}".to_sym) }
-    #end
-    
     def set_instances(key, val)
       self.class.send(:attr_accessor, key)
       instance_variable_set("@#{key}", get_value_from_params(val, controller_params))
