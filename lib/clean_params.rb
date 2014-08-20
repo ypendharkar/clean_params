@@ -14,7 +14,7 @@ module CleanParams
   
   # main method call; returns the final object
   def self.clean(controllerParams)
-    configuration.reset_config
+    #configuration.reset_config
     configuration.controller_params = controllerParams
     configuration.extract_params
     return configuration
@@ -65,7 +65,8 @@ module CleanParams
     
     # return nil if no rule for this attribute
     def method_missing(method, *args, &block)
-      set_instances(method, [method.to_s])
+      #set_instances(method, [method.to_s])
+      controller_params["#{method}"]
     end
   end
 end
