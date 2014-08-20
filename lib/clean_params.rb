@@ -14,7 +14,6 @@ module CleanParams
   
   # main method call; returns the final object
   def self.clean(controllerParams)
-    #configuration.reset_config
     configuration.controller_params = controllerParams
     configuration.extract_params
     return configuration
@@ -28,10 +27,6 @@ module CleanParams
       params.each do |key, val|
         set_instances(key, val)
       end
-    end
-    
-    def reset_config
-      (self.instance_variables - self.params.keys.map {|a| "@#{a}".to_sym}.push("@params".to_sym)).each {|var| remove_instance_variable("#{var}".to_sym) }
     end
     
     def set_instances(key, val)
@@ -65,7 +60,6 @@ module CleanParams
     
     # return nil if no rule for this attribute
     def method_missing(method, *args, &block)
-      #set_instances(method, [method.to_s])
       controller_params["#{method}"]
     end
   end
