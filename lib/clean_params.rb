@@ -8,12 +8,13 @@ module CleanParams
 
   # Sets configuration object
   def self.configure
-    self.configuration = Configuration.new
+    self.configuration ||= Configuration.new
     yield(configuration)
   end
   
   # main method call; returns the final object
   def self.clean(controllerParams)
+    configuration.reset_config
     configuration.controller_params = controllerParams
     configuration.extract_params
     return configuration
@@ -29,7 +30,15 @@ module CleanParams
       end
     end
     
+    def reset_config
+      (self.instance_variables - self.params.keys.map {|a| "@#{a}".to_sym}.push("@params".to_sym)).each {|var| remove_instance_variable("#{var}".to_sym) }
+    end
+    
     private
+    
+    #def reset_config
+      #(self.instance_variables - self.params.keys.map {|a| "@#{a}".to_sym}).each {|var| remove_instance_variable("@#{var}".to_sym) }
+    #end
     
     def set_instances(key, val)
       self.class.send(:attr_accessor, key)
